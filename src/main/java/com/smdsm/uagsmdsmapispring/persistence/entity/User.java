@@ -1,15 +1,19 @@
 package com.smdsm.uagsmdsmapispring.persistence.entity;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(exclude = {"userDiseases", "userRiskFactors"})
+@ToString(exclude = {"userDiseases", "userRiskFactors"})
 @Entity
-@Table(name = "user")
+@Table(name = "user", schema = "public")
 public class User {
 
     @Id
@@ -30,8 +34,8 @@ public class User {
     private LocalDateTime birthday;
 
     @OneToMany(mappedBy = "user")
-    List<UserDisease> userDiseases;
+    List<UserDisease> userDiseases = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
-    List<UserRiskFactor> userRiskFactors;
+    List<UserRiskFactor> userRiskFactors = new ArrayList<>();
 }

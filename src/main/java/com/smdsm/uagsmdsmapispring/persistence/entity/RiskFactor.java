@@ -1,13 +1,19 @@
 package com.smdsm.uagsmdsmapispring.persistence.entity;
 
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@EqualsAndHashCode(exclude = {"userRiskFactors"})
+@ToString(exclude = {"userRiskFactors"})
 @Entity
-@Table(name = "risk_factor")
+@Table(name = "risk_factor", schema = "public")
 public class RiskFactor {
 
     @Id
@@ -19,5 +25,5 @@ public class RiskFactor {
     private String name;
 
     @OneToMany(mappedBy = "riskFactor")
-    List<UserRiskFactor> userRiskFactors;
+    List<UserRiskFactor> userRiskFactors = new ArrayList<>();
 }
