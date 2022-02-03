@@ -9,11 +9,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Data
-@EqualsAndHashCode(exclude = {"userDiseases", "userRiskFactors"})
-@ToString(exclude = {"userDiseases", "userRiskFactors"})
+@Getter
+@Setter
+@AllArgsConstructor
 @Entity
 @Table(name = "user", schema = "public")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class User {
 
     @Id
@@ -34,8 +37,11 @@ public class User {
     private LocalDateTime birthday;
 
     @OneToMany(mappedBy = "user")
-    List<UserDisease> userDiseases = new ArrayList<>();
+    List<UserDisease> userDiseases;
 
     @OneToMany(mappedBy = "user")
-    List<UserRiskFactor> userRiskFactors = new ArrayList<>();
+    List<UserRiskFactor> userRiskFactors;
+
+    public User() {
+    }
 }

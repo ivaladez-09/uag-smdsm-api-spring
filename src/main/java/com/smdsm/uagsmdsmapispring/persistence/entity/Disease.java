@@ -1,19 +1,20 @@
 package com.smdsm.uagsmdsmapispring.persistence.entity;
 
 import com.fasterxml.jackson.annotation.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@EqualsAndHashCode(exclude = {"userDiseases"})
-@ToString(exclude = {"userDiseases"})
+@Getter
+@Setter
+@AllArgsConstructor
 @Entity
 @Table(name = "disease", schema = "public")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Disease {
 
     @Id
@@ -24,6 +25,9 @@ public class Disease {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "disease")
-    List<UserDisease> userDiseases = new ArrayList<>();
+/*    @OneToMany(mappedBy = "disease")
+    List<UserDisease> userDiseases;*/
+
+    public Disease() {
+    }
 }

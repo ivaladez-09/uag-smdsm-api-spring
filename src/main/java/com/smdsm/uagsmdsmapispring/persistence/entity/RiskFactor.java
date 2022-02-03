@@ -1,19 +1,20 @@
 package com.smdsm.uagsmdsmapispring.persistence.entity;
 
 import com.fasterxml.jackson.annotation.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@EqualsAndHashCode(exclude = {"userRiskFactors"})
-@ToString(exclude = {"userRiskFactors"})
+@Getter
+@Setter
+@AllArgsConstructor
 @Entity
 @Table(name = "risk_factor", schema = "public")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class RiskFactor {
 
     @Id
@@ -24,6 +25,9 @@ public class RiskFactor {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(mappedBy = "riskFactor")
-    List<UserRiskFactor> userRiskFactors = new ArrayList<>();
+/*    @OneToMany(mappedBy = "riskFactor")
+    List<UserRiskFactor> userRiskFactors;*/
+
+    public RiskFactor() {
+    }
 }
