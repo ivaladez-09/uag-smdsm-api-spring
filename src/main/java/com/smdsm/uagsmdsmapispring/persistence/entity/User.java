@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "user", schema = "public")
 @JsonIdentityInfo(
@@ -34,14 +36,11 @@ public class User {
     private String gender;
 
     @Column(name = "birthday")
-    private LocalDateTime birthday;
+    private LocalDate birthday;
 
     @OneToMany(mappedBy = "user")
     List<UserDisease> userDiseases;
 
     @OneToMany(mappedBy = "user")
     List<UserRiskFactor> userRiskFactors;
-
-    public User() {
-    }
 }

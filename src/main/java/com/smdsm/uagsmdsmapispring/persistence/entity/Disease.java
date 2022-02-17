@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "disease", schema = "public")
 @JsonIdentityInfo(
@@ -27,7 +28,4 @@ public class Disease {
 
 /*    @OneToMany(mappedBy = "disease")
     List<UserDisease> userDiseases;*/
-
-    public Disease() {
-    }
 }

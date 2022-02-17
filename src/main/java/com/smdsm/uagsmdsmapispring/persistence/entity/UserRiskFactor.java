@@ -8,6 +8,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "user_risk_factor", schema = "public")
 @JsonIdentityInfo(
@@ -33,7 +34,4 @@ public class UserRiskFactor {
     @ManyToOne
     @JoinColumn(name = "id_risk_factor")
     RiskFactor riskFactor;
-
-    public UserRiskFactor() {
-    }
 }

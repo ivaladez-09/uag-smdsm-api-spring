@@ -1,11 +1,11 @@
 package com.smdsm.uagsmdsmapispring.controller;
 
+import com.smdsm.uagsmdsmapispring.DTO.UserDto;
 import com.smdsm.uagsmdsmapispring.persistence.entity.User;
 import com.smdsm.uagsmdsmapispring.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class UserController {
     UserService userService;
 
     @GetMapping
-    List<User> getUsers(){
+    List<UserDto> getUsers(){
         return userService.findAll();
     }
 }
