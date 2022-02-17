@@ -6,10 +6,7 @@ import com.smdsm.uagsmdsmapispring.persistence.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,8 +21,12 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<UserDto> findAll() {
         List<User> users = userRepository.findAll();
+        return users.stream().map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
+    }
 
-        List<UserDto> listOfUsers = users.stream().map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
-        return listOfUsers;
+    @Override
+    public UserDto getById(Integer id) {
+        User user = userRepository.getById(id);
+        return mapper.map(user, UserDto.class);
     }
 }
