@@ -6,6 +6,8 @@ import com.smdsm.uagsmdsmapispring.persistence.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,8 +27,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDto getById(Integer id) {
-        User user = userRepository.getById(id);
+    public UserDto findById(Integer id) {
+        User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);;
         return mapper.map(user, UserDto.class);
     }
 }

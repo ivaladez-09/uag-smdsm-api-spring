@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,23 +36,29 @@ public class UserController {
             httpStatus = HttpStatus.BAD_REQUEST;
         }
 
-        return new ResponseEntity(users, httpStatus);
+        return new ResponseEntity<>(users, httpStatus);
     }
 
     @GetMapping("/{userId}")
     ResponseEntity<UserDto> getUserById(@PathVariable Integer userId){
 
         HttpStatus httpStatus = HttpStatus.OK;
-        UserDto user = new UserDto();
+        UserDto user;
 
         try {
-            user = userService.getById(userId);
+            user = userService.findById(userId);
+        }
+        catch (EntityNotFoundException e){
+            log.error("The entity User with id " + userId + " was not found.");
+            httpStatus = HttpStatus.NOT_FOUND;
+            return new ResponseEntity<>(httpStatus);
         }
         catch (Exception e) {
             log.error("There was an error with the current request.", e);
             httpStatus = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(httpStatus);
         }
 
-        return new ResponseEntity(user, httpStatus);
+        return new ResponseEntity<>(user, httpStatus);
     }
 }
