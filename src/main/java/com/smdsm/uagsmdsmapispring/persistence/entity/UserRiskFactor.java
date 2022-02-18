@@ -25,12 +25,12 @@ public class UserRiskFactor {
     @Column(name = "value")
     private Integer value;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userId")
     @JoinColumn(name = "id_user")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("riskFactorId")
     @JoinColumn(name = "id_risk_factor")
     private RiskFactor riskFactor;

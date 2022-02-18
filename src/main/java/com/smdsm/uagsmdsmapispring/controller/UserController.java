@@ -34,8 +34,21 @@ public class UserController {
     }
 
     @PostMapping
-    ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto user){
-        UserDto userDto = userService.createUser(user);
-        return new ResponseEntity<>(userDto, HttpStatus.OK);
+    ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto){
+        UserDto savedUserDto = userService.create(userDto);
+        return new ResponseEntity<>(savedUserDto, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{userId}")
+    ResponseEntity<UserDto> updateUserById(@Valid @RequestBody UserDto userDto,
+                                           @PathVariable Integer userId){
+        UserDto updatedUserDto = userService.update(userDto, userId);
+        return new ResponseEntity<>(updatedUserDto, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{userId}")
+    ResponseEntity<String> deleteUserById(@PathVariable Integer userId){
+        userService.deleteById(userId);
+        return new ResponseEntity<>("User entity deleted successfully.", HttpStatus.OK);
     }
 }

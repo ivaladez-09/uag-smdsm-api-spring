@@ -7,5 +7,7 @@ public interface UserService {
     List<UserDto> findAll();
 
     UserDto findById(Integer id);
-    UserDto createUser(UserDto userDto);
+    UserDto create(UserDto userDto);
+    UserDto update(UserDto userDto, Integer id);
+    void deleteById(Integer id);
 }

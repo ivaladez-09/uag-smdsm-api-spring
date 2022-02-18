@@ -41,6 +41,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<UserDisease> userDiseases;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRiskFactor> userRiskFactors;
 }

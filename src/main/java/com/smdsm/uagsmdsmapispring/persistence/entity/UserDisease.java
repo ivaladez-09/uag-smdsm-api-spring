@@ -22,12 +22,12 @@ public class UserDisease {
     @Column(name = "active")
     private Boolean isActive;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userId")
     @JoinColumn(name = "id_user")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("diseaseId")
     @JoinColumn(name = "id_disease")
     private Disease disease;

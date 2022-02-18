@@ -28,14 +28,33 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto findById(Integer id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));;
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
         return mapper.map(user, UserDto.class);
     }
 
     @Override
-    public UserDto createUser(UserDto userDto) {
+    public UserDto create(UserDto userDto) {
         User user = mapper.map(userDto, User.class);
         User newUser = userRepository.save(user);
         return mapper.map(newUser, UserDto.class);
+    }
+
+    @Override
+    public UserDto update(UserDto userDto, Integer id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setGender(userDto.getGender());
+        user.setBirthday(userDto.getBirthday());
+        userRepository.save(user);
+
+        return mapper.map(user, UserDto.class);
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        userRepository.deleteById(id);
     }
 }
