@@ -1,13 +1,13 @@
 package com.smdsm.uagsmdsmapispring.service;
 
 import com.smdsm.uagsmdsmapispring.DTO.UserDto;
+import com.smdsm.uagsmdsmapispring.exception.ResourceNotFoundException;
 import com.smdsm.uagsmdsmapispring.persistence.entity.User;
 import com.smdsm.uagsmdsmapispring.persistence.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto findById(Integer id) {
-        User user = userRepository.findById(id).orElseThrow(EntityNotFoundException::new);;
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));;
         return mapper.map(user, UserDto.class);
     }
 }
