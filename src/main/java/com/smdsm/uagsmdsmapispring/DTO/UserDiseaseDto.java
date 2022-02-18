@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDiseaseDto {
-    //private Integer id;
+    private UserDiseaseKeyDto id;
     private Boolean isActive;
-    DiseaseDto disease;
+    private DiseaseDto disease;
 }

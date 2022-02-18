@@ -39,8 +39,8 @@ public class User {
     private LocalDate birthday;
 
     @OneToMany(mappedBy = "user")
-    List<UserDisease> userDiseases;
+    private List<UserDisease> userDiseases;
 
     @OneToMany(mappedBy = "user")
-    List<UserRiskFactor> userRiskFactors;
+    private List<UserRiskFactor> userRiskFactors;
 }

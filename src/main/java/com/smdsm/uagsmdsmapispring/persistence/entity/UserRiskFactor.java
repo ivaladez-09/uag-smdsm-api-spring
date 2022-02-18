@@ -16,10 +16,8 @@ import javax.persistence.*;
         property = "id")
 public class UserRiskFactor {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    @EmbeddedId
+    private UserRiskFactorKey id;
 
     @Column(name = "active")
     private Boolean isActive;
@@ -28,10 +26,12 @@ public class UserRiskFactor {
     private Integer value;
 
     @ManyToOne
+    @MapsId("userId")
     @JoinColumn(name = "id_user")
-    User user;
+    private User user;
 
     @ManyToOne
+    @MapsId("riskFactorId")
     @JoinColumn(name = "id_risk_factor")
-    RiskFactor riskFactor;
+    private RiskFactor riskFactor;
 }

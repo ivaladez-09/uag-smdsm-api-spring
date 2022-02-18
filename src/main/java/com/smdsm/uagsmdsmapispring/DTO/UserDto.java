@@ -21,6 +21,6 @@ public class UserDto {
     private String gender;
     @NotNull
     private LocalDate birthday;
-    List<UserDiseaseDto> userDiseases;
-    List<UserRiskFactorDto> userRiskFactors;
+    private List<UserDiseaseDto> userDiseases;
+    private List<UserRiskFactorDto> userRiskFactors;
 }

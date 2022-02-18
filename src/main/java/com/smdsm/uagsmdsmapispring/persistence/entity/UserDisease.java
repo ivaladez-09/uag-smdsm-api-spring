@@ -16,19 +16,19 @@ import javax.persistence.*;
         property = "id")
 public class UserDisease {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    @EmbeddedId
+    private UserDiseaseKey id;
 
     @Column(name = "active")
     private Boolean isActive;
 
     @ManyToOne
+    @MapsId("userId")
     @JoinColumn(name = "id_user")
-    User user;
+    private User user;
 
     @ManyToOne
+    @MapsId("diseaseId")
     @JoinColumn(name = "id_disease")
-    Disease disease;
+    private Disease disease;
 }

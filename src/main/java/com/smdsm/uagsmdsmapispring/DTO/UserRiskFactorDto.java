@@ -10,8 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserRiskFactorDto {
-    //private Integer id;
+    private UserRiskFactorKeyDto id;
     private Boolean isActive;
     private Integer value;
-    RiskFactorDto riskFactor;
+    private RiskFactorDto riskFactor;
 }
