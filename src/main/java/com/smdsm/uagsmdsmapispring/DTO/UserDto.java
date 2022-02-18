@@ -1,19 +1,15 @@
 package com.smdsm.uagsmdsmapispring.DTO;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
+@RequiredArgsConstructor
 public class UserDto {
     private Integer id;
     @NotEmpty
@@ -23,7 +19,7 @@ public class UserDto {
     @NotEmpty
     @Size(min = 4, message = "Gender should have at least 4 characters - male/female")
     private String gender;
-    @NotEmpty
+    @NotNull
     private LocalDate birthday;
     List<UserDiseaseDto> userDiseases;
     List<UserRiskFactorDto> userRiskFactors;

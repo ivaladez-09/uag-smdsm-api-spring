@@ -7,4 +7,5 @@ public interface UserService {
     List<UserDto> findAll();
 
     UserDto findById(Integer id);
+    UserDto createUser(UserDto userDto);
 }

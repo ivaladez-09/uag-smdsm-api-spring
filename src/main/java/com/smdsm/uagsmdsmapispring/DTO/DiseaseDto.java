@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DiseaseDto {
-    private Integer id;
+    //private Integer id;
     private String name;
 }
