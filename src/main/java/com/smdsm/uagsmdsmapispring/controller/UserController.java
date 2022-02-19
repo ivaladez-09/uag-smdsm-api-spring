@@ -2,8 +2,7 @@ package com.smdsm.uagsmdsmapispring.controller;
 
 import com.smdsm.uagsmdsmapispring.dto.UserDto;
 import com.smdsm.uagsmdsmapispring.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/users")
 public class UserController {
-
-    private static Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     UserService userService;
@@ -46,7 +44,7 @@ public class UserController {
         return new ResponseEntity<>(updatedUserDto, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/{id}")
     ResponseEntity<String> deleteUserById(@PathVariable Integer id){
         userService.deleteById(id);
         return new ResponseEntity<>("User entity deleted successfully.", HttpStatus.OK);
