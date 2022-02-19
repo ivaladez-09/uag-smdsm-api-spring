@@ -27,9 +27,9 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("/{userId}")
-    ResponseEntity<UserDto> getUserById(@PathVariable Integer userId){
-        UserDto user = userService.findById(userId);
+    @GetMapping("/{id}")
+    ResponseEntity<UserDto> getUserById(@PathVariable Integer id){
+        UserDto user = userService.findById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -39,16 +39,16 @@ public class UserController {
         return new ResponseEntity<>(savedUserDto, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping("/{id}")
     ResponseEntity<UserDto> updateUserById(@Valid @RequestBody UserDto userDto,
-                                           @PathVariable Integer userId){
-        UserDto updatedUserDto = userService.update(userDto, userId);
+                                           @PathVariable Integer id){
+        UserDto updatedUserDto = userService.update(userDto, id);
         return new ResponseEntity<>(updatedUserDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/{userId}")
-    ResponseEntity<String> deleteUserById(@PathVariable Integer userId){
-        userService.deleteById(userId);
+    ResponseEntity<String> deleteUserById(@PathVariable Integer id){
+        userService.deleteById(id);
         return new ResponseEntity<>("User entity deleted successfully.", HttpStatus.OK);
     }
 }

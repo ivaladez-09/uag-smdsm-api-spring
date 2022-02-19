@@ -1,0 +1,390 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Sistema de Monitoreo y Diagnostico del Sindrome Metabolico",
+        "version": "1.0.0",
+        "description": "API for interacting with SMDSM database.",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Swagger API Team",
+            "url": "http://swagger.io",
+            "email": "apiteam@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://petstore.swagger.io/api"
+        }
+    ],
+    "paths": {
+        "/users": {
+            "servers": [
+                {
+                    "url": "/smdsm/api",
+                    "description": ""
+                }
+            ],
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/UsersResponse"
+                    }
+                },
+                "operationId": "getUsers",
+                "summary": "Get all users",
+                "description": "Get all the registered users from database."
+            },
+            "post": {
+                "requestBody": {
+                    "description": "User information.\n\nThe id, userDiseases, and userRiskFactors are not needed.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "201": {
+                        "$ref": "#/components/responses/UserResponse"
+                    }
+                },
+                "summary": "Create an user",
+                "description": "Create an user with the basic information.\nYou do nt need to provide userDiseases or userRiskFactors."
+            }
+        },
+        "/users/{id}": {
+            "servers": [
+                {
+                    "url": "/smdsm/api",
+                    "description": ""
+                }
+            ],
+            "put": {
+                "requestBody": {
+                    "description": "User data",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/UserResponse"
+                    }
+                },
+                "summary": "Update user data",
+                "description": "Update user data"
+            },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "User deleted"
+                    }
+                },
+                "summary": "Delete user",
+                "description": "Delete user object"
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "description": "User identifier",
+                    "schema": {
+                        "type": "integer"
+                    },
+                    "in": "path",
+                    "required": true
+                }
+            ]
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "description": "User information",
+                "required": [
+                    "firstName",
+                    "lastName",
+                    "gender",
+                    "birthday"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "Unique identifier",
+                        "type": "integer"
+                    },
+                    "firstName": {
+                        "description": "User first name.",
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "description": "User last name",
+                        "type": "string"
+                    },
+                    "gender": {
+                        "description": "User gender",
+                        "type": "string"
+                    },
+                    "birthday": {
+                        "description": "User birthday date (MM/DD/YYYY)",
+                        "type": "string"
+                    },
+                    "userDiseases": {
+                        "description": "List of all diseases from the user.",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserDisease"
+                        }
+                    },
+                    "userRiskFactors": {
+                        "description": "List of oall risk factor from an User",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/UserRiskFactor"
+                        }
+                    }
+                },
+                "example": {
+                    "id": 87,
+                    "firstName": "some text",
+                    "lastName": "some text",
+                    "gender": "some text",
+                    "birthday": "some text",
+                    "userDiseases": [
+                        {
+                            "id": {
+                                "userId": 81,
+                                "diseaseId": 94
+                            },
+                            "isActive": true,
+                            "disease": {
+                                "id": 16,
+                                "name": "some text"
+                            }
+                        },
+                        {
+                            "id": {
+                                "userId": 63,
+                                "diseaseId": 92
+                            },
+                            "isActive": true,
+                            "disease": {
+                                "id": 14,
+                                "name": "some text"
+                            }
+                        }
+                    ],
+                    "userRiskFactor": [
+                        {
+                            "id": {
+                                "userId": 78,
+                                "riskFactorId": 18
+                            },
+                            "isActive": true,
+                            "value": 32,
+                            "riskFactor": {
+                                "id": 72,
+                                "name": "some text"
+                            }
+                        },
+                        {
+                            "id": {
+                                "userId": 68,
+                                "riskFactorId": 63
+                            },
+                            "isActive": true,
+                            "value": 97,
+                            "riskFactor": {
+                                "id": 56,
+                                "name": "some text"
+                            }
+                        }
+                    ]
+                }
+            },
+            "UserDisease": {
+                "description": "User-Disease data.",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/UserDiseaseKey",
+                        "description": "Unique identifier"
+                    },
+                    "isActive": {
+                        "description": "Status flag to know if the current user presents the disease.",
+                        "type": "boolean"
+                    },
+                    "disease": {
+                        "$ref": "#/components/schemas/Disease",
+                        "description": "Disease that the user has."
+                    }
+                },
+                "example": {
+                    "id": {
+                        "userId": 56,
+                        "diseaseId": 66
+                    },
+                    "isActive": true,
+                    "disease": {
+                        "id": 58,
+                        "name": "some text"
+                    }
+                }
+            },
+            "Disease": {
+                "description": "Disease (diabetes/cardiovascular)",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "Unique identifier",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Name of the disease",
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "id": 92,
+                    "name": "some text"
+                }
+            },
+            "UserDiseaseKey": {
+                "description": "Composes primary key which contains userId and diseaseId.",
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "description": "User unique identifier",
+                        "type": "integer"
+                    },
+                    "diseaseId": {
+                        "description": "Disease unique identifier",
+                        "type": "integer"
+                    }
+                },
+                "example": {
+                    "userId": 54,
+                    "diseaseId": 23
+                }
+            },
+            "RiskFactor": {
+                "description": "Risk factor as HDL, plasm glucose, central obesity, etc.",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "Unique identifier",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Name of the risk factor",
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "id": 6,
+                    "name": "some text"
+                }
+            },
+            "UserRiskFactorKey": {
+                "description": "Compose primary key which contains userId and riskFactorId",
+                "type": "object",
+                "properties": {
+                    "userId": {
+                        "description": "User unique identifier",
+                        "type": "integer"
+                    },
+                    "riskFactorId": {
+                        "description": "Risk factor unique identifier",
+                        "type": "integer"
+                    }
+                },
+                "example": {
+                    "userId": 78,
+                    "riskFactorId": 46
+                }
+            },
+            "UserRiskFactor": {
+                "description": "User-Risk factor data",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "$ref": "#/components/schemas/UserRiskFactorKey",
+                        "description": "Compose primary key"
+                    },
+                    "isActive": {
+                        "description": "Risk factor status to understand is the risk factor is really a risk according to formulas.",
+                        "type": "boolean"
+                    },
+                    "value": {
+                        "description": "Numeric value of the risk factor",
+                        "type": "integer"
+                    },
+                    "riskFactor": {
+                        "$ref": "#/components/schemas/RiskFactor",
+                        "description": "Risk facto name and id"
+                    }
+                },
+                "example": {
+                    "id": {
+                        "userId": 41,
+                        "riskFactorId": 56
+                    },
+                    "isActive": true,
+                    "value": 60,
+                    "riskFactor": {
+                        "id": 57,
+                        "name": "some text"
+                    }
+                }
+            }
+        },
+        "responses": {
+            "UsersResponse": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "description": "Several users response."
+            },
+            "UserResponse": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/User"
+                        }
+                    }
+                },
+                "description": "Single user response"
+            }
+        }
+    }
+}
