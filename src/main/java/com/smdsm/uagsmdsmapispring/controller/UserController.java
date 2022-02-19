@@ -55,7 +55,7 @@ public class UserController {
             @RequestParam(value = "disease", defaultValue = "diabetes", required = false) String disease,
             @RequestParam(value = "gender", defaultValue = "male", required = false) String gender){
 
-        Integer totalUsers = userService.countUsersByGenderAndDisease(disease, gender);
+        Integer totalUsers = userService.countUsersByGenderAndDisease(gender, disease);
         return new ResponseEntity<>(totalUsers, HttpStatus.OK);
     }
 
@@ -64,7 +64,7 @@ public class UserController {
             @RequestParam(value = "riskFactor", defaultValue = "hdl", required = false) String riskFactor,
             @RequestParam(value = "gender", defaultValue = "female", required = false) String gender){
 
-        Integer totalUsers = userService.countUsersByGenderAndRiskFactor(riskFactor, gender);
+        Integer totalUsers = userService.countUsersByGenderAndRiskFactor(gender, riskFactor);
         return new ResponseEntity<>(totalUsers, HttpStatus.OK);
     }
 }

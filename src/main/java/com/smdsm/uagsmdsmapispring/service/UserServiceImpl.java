@@ -61,18 +61,20 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Integer countUsersByGenderAndRiskFactor(String riskFactor, String gender) {
+    public Integer countUsersByGenderAndRiskFactor(String gender, String riskFactor) {
         if (riskFactor == null || riskFactor.isEmpty()){
             log.error("Parameter 'riskFactor' must not be null or empty.");
         }
-        return userRepository.findByGenderAndRiskFactor(riskFactor, gender);
+        log.info(riskFactor + " and " + gender);
+        return userRepository.countByGenderAndRiskFactor(gender, riskFactor);
     }
 
     @Override
-    public Integer countUsersByGenderAndDisease(String disease, String gender) {
+    public Integer countUsersByGenderAndDisease(String gender, String disease) {
         if (disease == null || disease.isEmpty()){
             log.error("Parameter 'disease' must not be null or empty.");
         }
-        return userRepository.findByGenderAndDisease(disease, gender);
+        log.info(disease + " and " + gender);
+        return userRepository.countByGenderAndDisease(gender, disease);
     }
 }

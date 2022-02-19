@@ -14,12 +14,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "SELECT COUNT(*) FROM public.user u\n" +
             "        INNER JOIN public.user_disease ud ON ud.id_user=u.id\n" +
             "        INNER JOIN public.disease d ON ud.id_disease=d.id\n" +
-            "        WHERE gender = :gender AND name = :disease", nativeQuery = true)
-    public Integer findByGenderAndDisease(@Param("gender") String gender, @Param("disease") String disease);
+            "        WHERE u.gender = :gender AND d.name = :disease", nativeQuery = true)
+    public Integer countByGenderAndDisease(@Param("gender") String gender, @Param("disease") String disease);
 
     @Query(value = "SELECT COUNT(*) FROM public.user u\n" +
             "        INNER JOIN public.user_risk_factor ur ON ur.id_user=u.id\n" +
             "        INNER JOIN public.risk_factor r ON ur.id_risk_factor=r.id\n" +
-            "        WHERE gender = :gender AND name = :riskFactor", nativeQuery = true)
-    public Integer findByGenderAndRiskFactor(@Param("gender") String gender, @Param("riskFactor") String riskFactor);
+            "        WHERE u.gender = :gender AND r.name = :riskFactor", nativeQuery = true)
+    public Integer countByGenderAndRiskFactor(@Param("gender") String gender, @Param("riskFactor") String riskFactor);
 }
