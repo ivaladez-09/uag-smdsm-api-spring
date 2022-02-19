@@ -1,6 +1,6 @@
 package com.smdsm.uagsmdsmapispring.controller;
 
-import com.smdsm.uagsmdsmapispring.DTO.UserDto;
+import com.smdsm.uagsmdsmapispring.dto.UserDto;
 import com.smdsm.uagsmdsmapispring.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

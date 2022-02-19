@@ -1,7 +1,6 @@
 package com.smdsm.uagsmdsmapispring.exception;
 
-import com.smdsm.uagsmdsmapispring.DTO.ErrorDetails;
-import com.smdsm.uagsmdsmapispring.controller.UserController;
+import com.smdsm.uagsmdsmapispring.dto.ErrorDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

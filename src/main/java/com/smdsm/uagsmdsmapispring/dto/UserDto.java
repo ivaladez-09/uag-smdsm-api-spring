@@ -1,4 +1,4 @@
-package com.smdsm.uagsmdsmapispring.DTO;
+package com.smdsm.uagsmdsmapispring.dto;
 
 import lombok.*;
 

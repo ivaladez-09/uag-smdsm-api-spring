@@ -1,6 +1,6 @@
 package com.smdsm.uagsmdsmapispring.service;
 
-import com.smdsm.uagsmdsmapispring.DTO.UserDto;
+import com.smdsm.uagsmdsmapispring.dto.UserDto;
 import com.smdsm.uagsmdsmapispring.exception.ResourceNotFoundException;
 import com.smdsm.uagsmdsmapispring.persistence.entity.User;
 import com.smdsm.uagsmdsmapispring.persistence.repository.UserRepository;

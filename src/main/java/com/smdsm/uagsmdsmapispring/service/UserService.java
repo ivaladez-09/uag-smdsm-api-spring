@@ -1,6 +1,6 @@
 package com.smdsm.uagsmdsmapispring.service;
 
-import com.smdsm.uagsmdsmapispring.DTO.UserDto;
+import com.smdsm.uagsmdsmapispring.dto.UserDto;
 import java.util.List;
 
 public interface UserService {

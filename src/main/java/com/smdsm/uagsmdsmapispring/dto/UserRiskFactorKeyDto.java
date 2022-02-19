@@ -1,4 +1,4 @@
-package com.smdsm.uagsmdsmapispring.DTO;
+package com.smdsm.uagsmdsmapispring.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RiskFactorDto {
-    private Integer id;
-    private String name;
+public class UserRiskFactorKeyDto {
+    private Integer userId;
+    private Integer riskFactorId;
 }

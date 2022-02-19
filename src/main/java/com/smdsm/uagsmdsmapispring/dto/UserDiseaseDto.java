@@ -1,4 +1,4 @@
-package com.smdsm.uagsmdsmapispring.DTO;
+package com.smdsm.uagsmdsmapispring.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDiseaseKeyDto {
-    private Integer userId;
-    private Integer diseaseId;
+public class UserDiseaseDto {
+    private UserDiseaseKeyDto id;
+    private Boolean isActive;
+    private DiseaseDto disease;
 }
