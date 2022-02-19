@@ -49,4 +49,22 @@ public class UserController {
         userService.deleteById(id);
         return new ResponseEntity<>("User entity deleted successfully.", HttpStatus.OK);
     }
+
+    @GetMapping("/count-disease") // ?disease={}&gender={}
+    ResponseEntity<Integer> countUsersByDisease(
+            @RequestParam(value = "disease", defaultValue = "diabetes", required = false) String disease,
+            @RequestParam(value = "gender", defaultValue = "male", required = false) String gender){
+
+        Integer totalUsers = userService.countUsersByGenderAndDisease(disease, gender);
+        return new ResponseEntity<>(totalUsers, HttpStatus.OK);
+    }
+
+    @GetMapping("/count-risk-factor") // ?riskFactor={}&gender={}
+    ResponseEntity<Integer> countUsersByRiskFactor(
+            @RequestParam(value = "riskFactor", defaultValue = "hdl", required = false) String riskFactor,
+            @RequestParam(value = "gender", defaultValue = "female", required = false) String gender){
+
+        Integer totalUsers = userService.countUsersByGenderAndRiskFactor(riskFactor, gender);
+        return new ResponseEntity<>(totalUsers, HttpStatus.OK);
+    }
 }

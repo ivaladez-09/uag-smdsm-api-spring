@@ -10,4 +10,6 @@ public interface UserService {
     UserDto create(UserDto userDto);
     UserDto update(UserDto userDto, Integer id);
     void deleteById(Integer id);
+    Integer countUsersByGenderAndRiskFactor(String riskFactor, String gender);
+    Integer countUsersByGenderAndDisease(String disease, String gender);
 }
