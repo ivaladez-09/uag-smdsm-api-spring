@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService{
         if (riskFactor == null || riskFactor.isEmpty()){
             log.error("Parameter 'riskFactor' must not be null or empty.");
         }
-        return 0;
+        return userRepository.findByGenderAndRiskFactor(riskFactor, gender);
     }
 
     @Override
@@ -73,6 +73,6 @@ public class UserServiceImpl implements UserService{
         if (disease == null || disease.isEmpty()){
             log.error("Parameter 'disease' must not be null or empty.");
         }
-        return 0;
+        return userRepository.findByGenderAndDisease(disease, gender);
     }
 }

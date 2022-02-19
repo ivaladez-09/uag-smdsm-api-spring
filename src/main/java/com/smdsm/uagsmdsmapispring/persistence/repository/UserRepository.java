@@ -11,15 +11,15 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Integer> {
     public List<User> findByGenderAndBirthdayBetween(String gender, LocalDate startDate, LocalDate endDate);
 
-    @Query(value = "SELECT COUNT(*) FROM User u\n" +
-            "        INNER JOIN UserDisease ud ON ud.userId=u.id\n" +
-            "        INNER JOIN Disease d ON ud.diseaseId=d.id\n" +
+    @Query(value = "SELECT COUNT(*) FROM public.user u\n" +
+            "        INNER JOIN public.user_disease ud ON ud.id_user=u.id\n" +
+            "        INNER JOIN public.disease d ON ud.id_disease=d.id\n" +
             "        WHERE gender = :gender AND name = :disease", nativeQuery = true)
     public Integer findByGenderAndDisease(@Param("gender") String gender, @Param("disease") String disease);
 
-    @Query(value = "SELECT COUNT(*) FROM User u\n" +
-            "        INNER JOIN UserRiskFactor ur ON ur.userId=u.id\n" +
-            "        INNER JOIN RiskFactor r ON ur.riskFactorId=r.id\n" +
+    @Query(value = "SELECT COUNT(*) FROM public.user u\n" +
+            "        INNER JOIN public.user_risk_factor ur ON ur.id_user=u.id\n" +
+            "        INNER JOIN public.risk_factor r ON ur.id_risk_factor=r.id\n" +
             "        WHERE gender = :gender AND name = :riskFactor", nativeQuery = true)
     public Integer findByGenderAndRiskFactor(@Param("gender") String gender, @Param("riskFactor") String riskFactor);
 }
