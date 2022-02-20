@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -64,6 +65,7 @@ public class UserServiceImpl implements UserService{
     public Integer countUsersByGenderAndRiskFactor(String gender, String riskFactor) {
         if (riskFactor == null || riskFactor.isEmpty()){
             log.error("Parameter 'riskFactor' must not be null or empty.");
+            return 0;
         }
         log.info(riskFactor + " and " + gender);
         return userRepository.countByGenderAndRiskFactor(gender, riskFactor);
@@ -73,8 +75,20 @@ public class UserServiceImpl implements UserService{
     public Integer countUsersByGenderAndDisease(String gender, String disease) {
         if (disease == null || disease.isEmpty()){
             log.error("Parameter 'disease' must not be null or empty.");
+            return 0;
         }
         log.info(disease + " and " + gender);
         return userRepository.countByGenderAndDisease(gender, disease);
+    }
+
+    @Override
+    public Integer countByGenderAndBirthdayBetween(String gender, String startDate, String endDate) {
+
+        if (startDate == null || endDate == null){
+            log.error("Parameters 'startDate' and 'endDate' must not be null or empty.");
+            return 0;
+        }
+        log.info(startDate + ", " + endDate + ", and " + gender);
+        return userRepository.countByGenderAndBirthdayBetween(gender, LocalDate.parse(startDate), LocalDate.parse(endDate));
     }
 }

@@ -236,6 +236,42 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "count-date-range",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/smdsm/api/users/count-date-range?startDate=1990-02-09&endDate=2020-06-20&gender=female",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"smdsm",
+								"api",
+								"users",
+								"count-date-range"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "1990-02-09"
+								},
+								{
+									"key": "endDate",
+									"value": "2020-06-20"
+								},
+								{
+									"key": "gender",
+									"value": "female"
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

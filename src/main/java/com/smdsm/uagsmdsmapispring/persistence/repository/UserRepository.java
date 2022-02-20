@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
-    public List<User> findByGenderAndBirthdayBetween(String gender, LocalDate startDate, LocalDate endDate);
+    public Integer countByGenderAndBirthdayBetween(String gender, LocalDate startDate, LocalDate endDate);
 
     @Query(value = "SELECT COUNT(*) FROM public.user u\n" +
             "        INNER JOIN public.user_disease ud ON ud.id_user=u.id\n" +

@@ -67,4 +67,14 @@ public class UserController {
         Integer totalUsers = userService.countUsersByGenderAndRiskFactor(gender, riskFactor);
         return new ResponseEntity<>(totalUsers, HttpStatus.OK);
     }
+
+    @GetMapping("/count-date-range") // ?startDate={}&endDate={}&gender={}
+    ResponseEntity<Integer> countUsersByDateRange(
+            @RequestParam(value = "startDate", defaultValue = "1900-01-01", required = false) String startDate,
+            @RequestParam(value = "endDate", defaultValue = "2099-12-31", required = false) String endDate,
+            @RequestParam(value = "gender", defaultValue = "female", required = false) String gender){
+
+        Integer totalUsers = userService.countByGenderAndBirthdayBetween(gender, startDate, endDate);
+        return new ResponseEntity<>(totalUsers, HttpStatus.OK);
+    }
 }
