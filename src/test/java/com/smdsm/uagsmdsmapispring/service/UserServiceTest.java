@@ -1,40 +1,118 @@
 package com.smdsm.uagsmdsmapispring.service;
 
+import com.smdsm.uagsmdsmapispring.dto.UserDto;
+import com.smdsm.uagsmdsmapispring.persistence.entity.User;
+import com.smdsm.uagsmdsmapispring.persistence.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.mockito.Mockito.*;
+
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.modelmapper.ModelMapper;
+
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class UserServiceTest {
+
+    private UserService userService;
+
+    @Mock
+    private UserRepository userRepository;
+    private List<UserDto> expectedAllUsersDto;
+    private Function<String, LocalDate> parser = LocalDate::parse;
+    private ModelMapper mapper = new ModelMapper();
+
+    @BeforeEach
+    public void setup(){
+        userService = new UserServiceImpl(userRepository, mapper);
+        expectedAllUsersDto = Arrays.asList(
+                new UserDto(1, "Ivan", "Valadez", "male", parser.apply("1996-02-09")),
+                new UserDto(2, "Aaron", "Ruiz", "male", parser.apply("2000-06-20")),
+                new UserDto(3, "Susana", "Perez", "female", parser.apply("1998-05-08")),
+                new UserDto(4, "Andrea", "Amante", "female", parser.apply("2001-07-22")),
+                new UserDto(5, "Raul", "Rios", "male", parser.apply("1985-11-30"))
+        );
+    }
 
     @Test
     void findAll() {
+        when(userRepository.findAll()).thenReturn(
+                Arrays.asList(
+                        new User(1, "Ivan", "Valadez", "male", parser.apply("1996-02-09")),
+                        new User(2, "Aaron", "Ruiz", "male", parser.apply("2000-06-20")),
+                        new User(3, "Susana", "Perez", "female", parser.apply("1998-05-08")),
+                        new User(4, "Andrea", "Amante", "female", parser.apply("2001-07-22")),
+                        new User(5, "Raul", "Rios", "male", parser.apply("1985-11-30"))
+                )
+        );
+        List<UserDto> actualUsers = userService.findAll();
+        assertEquals(expectedAllUsersDto, actualUsers);
     }
 
     @Test
     void findById() {
+        when(userRepository.findById(1)).
+                thenReturn(Optional.of(
+                        new User(1, "Ivan", "Valadez", "male", parser.apply("1996-02-09"))
+                ));
+        Optional<User> actualUser = userRepository.findById(1);
+        assertFalse(actualUser.isEmpty());
     }
 
     @Test
     void create() {
+        User user = new User(1, "Ivan", "Valadez", "male", parser.apply("1996-02-09"));
+        when(userRepository.save(any())).thenReturn(user);
+        UserDto expectedUser = mapper.map(user, UserDto.class);
+
+        UserDto actualUser = userService.create(new UserDto(1, "Ivan", "Valadez", "male", parser.apply("1996-02-09")));
+        assertEquals(expectedUser, actualUser);
     }
 
     @Test
     void update() {
-    }
+        User user = new User(1, "Ivan", "Valadez", "male", parser.apply("1996-02-09"));
+        when(userRepository.findById(1)).
+                thenReturn(Optional.of(user));
+        UserDto expectedUser = mapper.map(user, UserDto.class);
 
-    @Test
-    void deleteById() {
+        UserDto actualUser = userService.update(expectedUser, expectedUser.getId());
+        assertEquals(expectedUser, actualUser);
     }
 
     @Test
     void countUsersByGenderAndRiskFactor() {
+        when(userRepository.countByGenderAndRiskFactor("male", "hdl")).thenReturn(5);
+
+        Integer result = userService.countUsersByGenderAndRiskFactor("male", "hdl");
+        assertEquals(5, result);
     }
 
     @Test
     void countUsersByGenderAndDisease() {
+        when(userRepository.countByGenderAndDisease("female", "diabetes")).thenReturn(5);
+
+        Integer result = userService.countUsersByGenderAndDisease("female", "diabetes");
+        assertEquals(5, result);
     }
 
     @Test
     void countByGenderAndBirthdayBetween() {
+        LocalDate startDate = parser.apply("1996-02-09");
+        LocalDate endDate = parser.apply("2002-06-07");
+        when(userRepository.countByGenderAndBirthdayBetween("female", startDate, endDate)).thenReturn(5);
+
+        Integer result = userService.countByGenderAndBirthdayBetween("female", "1996-02-09", "2002-06-07");
+        assertEquals(5, result);
     }
 }

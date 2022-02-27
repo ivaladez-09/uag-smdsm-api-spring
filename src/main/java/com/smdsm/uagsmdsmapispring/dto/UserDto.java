@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class UserDto implements Serializable {
     private Integer id;
     @NotEmpty
@@ -26,4 +27,12 @@ public class UserDto implements Serializable {
     private LocalDate birthday;
     private List<UserDiseaseDto> userDiseases;
     private List<UserRiskFactorDto> userRiskFactors;
+
+    public UserDto(Integer id, String firstName, String lastName, String gender, LocalDate birthday) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = gender;
+        this.birthday = birthday;
+    }
 }

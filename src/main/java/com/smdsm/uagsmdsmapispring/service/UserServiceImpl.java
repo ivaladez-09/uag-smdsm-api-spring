@@ -17,11 +17,18 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService{
 
-    @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+    private ModelMapper mapper;
 
+    //NOTE: Inject dependencies on this way to create Unit Testing. Avoid @Autowired UserRepository userRepository;
     @Autowired
-    ModelMapper mapper;
+    public UserServiceImpl(UserRepository userRepository, ModelMapper mapper) {
+        this.userRepository = userRepository;
+        this.mapper = mapper;
+    }
+
+    public UserServiceImpl() {
+    }
 
     @Override
     public List<UserDto> findAll() {
