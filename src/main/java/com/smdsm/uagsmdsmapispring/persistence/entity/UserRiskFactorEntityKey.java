@@ -10,10 +10,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
-public class UserDiseaseKey implements Serializable {
-    @Column(name = "id_user")
+public class UserRiskFactorEntityKey implements Serializable {
+    @Column(name = "id_user", nullable = false)
     private Integer userId;
 
-    @Column(name = "id_disease")
-    private Integer diseaseId;
+    @Column(name = "id_risk_factor", nullable = false)
+    private Integer riskFactorId;
 }

@@ -2,7 +2,7 @@ package com.smdsm.uagsmdsmapispring.service;
 
 import com.smdsm.uagsmdsmapispring.dto.UserDto;
 import com.smdsm.uagsmdsmapispring.exception.ResourceNotFoundException;
-import com.smdsm.uagsmdsmapispring.persistence.entity.User;
+import com.smdsm.uagsmdsmapispring.persistence.entity.UserEntity;
 import com.smdsm.uagsmdsmapispring.persistence.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -29,34 +29,34 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<UserDto> findAll() {
-        List<User> users = userRepository.findAll();
-        return users.stream().map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
+        List<UserEntity> userEntities = userRepository.findAll();
+        return userEntities.stream().map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
     }
 
     @Override
     public UserDto findById(Integer id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
-        return mapper.map(user, UserDto.class);
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        return mapper.map(userEntity, UserDto.class);
     }
 
     @Override
     public UserDto create(UserDto userDto) {
-        User user = mapper.map(userDto, User.class);
-        User newUser = userRepository.save(user);
-        return mapper.map(newUser, UserDto.class);
+        UserEntity userEntity = mapper.map(userDto, UserEntity.class);
+        UserEntity newUserEntity = userRepository.save(userEntity);
+        return mapper.map(newUserEntity, UserDto.class);
     }
 
     @Override
     public UserDto update(UserDto userDto, Integer id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setGender(userDto.getGender());
-        user.setBirthday(userDto.getBirthday());
-        userRepository.save(user);
+        userEntity.setFirstName(userDto.getFirstName());
+        userEntity.setLastName(userDto.getLastName());
+        userEntity.setGender(userDto.getGender());
+        userEntity.setBirthday(userDto.getBirthday());
+        userRepository.save(userEntity);
 
-        return mapper.map(user, UserDto.class);
+        return mapper.map(userEntity, UserDto.class);
     }
 
     @Override

@@ -7,13 +7,12 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Embeddable
-public class UserRiskFactorKey implements Serializable {
+public class UserDiseaseEntityKey implements Serializable {
     @Column(name = "id_user")
     private Integer userId;
 
-    @Column(name = "id_risk_factor")
-    private Integer riskFactorId;
+    @Column(name = "id_disease")
+    private Integer diseaseId;
 }

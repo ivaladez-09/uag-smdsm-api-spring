@@ -1,7 +1,7 @@
 package com.smdsm.uagsmdsmapispring.service;
 
 import com.smdsm.uagsmdsmapispring.dto.UserDto;
-import com.smdsm.uagsmdsmapispring.persistence.entity.User;
+import com.smdsm.uagsmdsmapispring.persistence.entity.UserEntity;
 import com.smdsm.uagsmdsmapispring.persistence.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ import java.util.function.Function;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceTest {
+class UserEntityServiceTest {
 
     @Mock
     private UserRepository userRepository;
@@ -49,11 +49,11 @@ class UserServiceTest {
     void findAll() {
         when(userRepository.findAll()).thenReturn(
                 Arrays.asList(
-                        new User(1, "Ivan", "Valadez", "male", parser.apply("1996-02-09")),
-                        new User(2, "Aaron", "Ruiz", "male", parser.apply("2000-06-20")),
-                        new User(3, "Susana", "Perez", "female", parser.apply("1998-05-08")),
-                        new User(4, "Andrea", "Amante", "female", parser.apply("2001-07-22")),
-                        new User(5, "Raul", "Rios", "male", parser.apply("1985-11-30"))
+                        new UserEntity(1, "Ivan", "Valadez", "male", parser.apply("1996-02-09")),
+                        new UserEntity(2, "Aaron", "Ruiz", "male", parser.apply("2000-06-20")),
+                        new UserEntity(3, "Susana", "Perez", "female", parser.apply("1998-05-08")),
+                        new UserEntity(4, "Andrea", "Amante", "female", parser.apply("2001-07-22")),
+                        new UserEntity(5, "Raul", "Rios", "male", parser.apply("1985-11-30"))
                 )
         );
         List<UserDto> actualUsers = userService.findAll();
@@ -64,17 +64,17 @@ class UserServiceTest {
     void findById() {
         when(userRepository.findById(1)).
                 thenReturn(Optional.of(
-                        new User(1, "Ivan", "Valadez", "male", parser.apply("1996-02-09"))
+                        new UserEntity(1, "Ivan", "Valadez", "male", parser.apply("1996-02-09"))
                 ));
-        Optional<User> actualUser = userRepository.findById(1);
+        Optional<UserEntity> actualUser = userRepository.findById(1);
         assertFalse(actualUser.isEmpty());
     }
 
     @Test
     void create() {
-        User user = new User(1, "Ivan", "Valadez", "male", parser.apply("1996-02-09"));
-        when(userRepository.save(any())).thenReturn(user);
-        UserDto expectedUser = mapper.map(user, UserDto.class);
+        UserEntity userEntity = new UserEntity(1, "Ivan", "Valadez", "male", parser.apply("1996-02-09"));
+        when(userRepository.save(any())).thenReturn(userEntity);
+        UserDto expectedUser = mapper.map(userEntity, UserDto.class);
 
         UserDto actualUser = userService.create(new UserDto(1, "Ivan", "Valadez", "male", parser.apply("1996-02-09")));
         assertEquals(expectedUser, actualUser);
@@ -82,10 +82,10 @@ class UserServiceTest {
 
     @Test
     void update() {
-        User user = new User(1, "Ivan", "Valadez", "male", parser.apply("1996-02-09"));
+        UserEntity userEntity = new UserEntity(1, "Ivan", "Valadez", "male", parser.apply("1996-02-09"));
         when(userRepository.findById(1)).
-                thenReturn(Optional.of(user));
-        UserDto expectedUser = mapper.map(user, UserDto.class);
+                thenReturn(Optional.of(userEntity));
+        UserDto expectedUser = mapper.map(userEntity, UserDto.class);
 
         UserDto actualUser = userService.update(expectedUser, expectedUser.getId());
         assertEquals(expectedUser, actualUser);

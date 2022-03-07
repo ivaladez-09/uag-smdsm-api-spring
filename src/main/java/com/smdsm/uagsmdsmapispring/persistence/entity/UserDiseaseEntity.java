@@ -1,24 +1,18 @@
 package com.smdsm.uagsmdsmapispring.persistence.entity;
 
-import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
 @Entity
-@Table(name = "user_disease", schema = "public")
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
-public class UserDisease implements Serializable {
+@Table(name = "user_disease")
+public class UserDiseaseEntity implements Serializable {
 
     @EmbeddedId
-    private UserDiseaseKey id;
+    private UserDiseaseEntityKey id;
 
     @Column(name = "active")
     private Boolean isActive;
@@ -26,10 +20,10 @@ public class UserDisease implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userId")
     @JoinColumn(name = "id_user")
-    private User user;
+    private UserEntity user;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("diseaseId")
     @JoinColumn(name = "id_disease")
-    private Disease disease;
+    private DiseaseEntity disease;
 }
