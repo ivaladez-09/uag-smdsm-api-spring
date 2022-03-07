@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
@@ -24,17 +25,17 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
-    private UserService userService;
-
     @Mock
     private UserRepository userRepository;
     private List<UserDto> expectedAllUsersDto;
-    private Function<String, LocalDate> parser = LocalDate::parse;
-    private ModelMapper mapper = new ModelMapper();
+    private final Function<String, LocalDate> parser = LocalDate::parse;
+    private final ModelMapper mapper = new ModelMapper();
+
+    @InjectMocks
+    private final UserService userService = new UserServiceImpl(userRepository, mapper);
 
     @BeforeEach
     public void setup(){
-        userService = new UserServiceImpl(userRepository, mapper);
         expectedAllUsersDto = Arrays.asList(
                 new UserDto(1, "Ivan", "Valadez", "male", parser.apply("1996-02-09")),
                 new UserDto(2, "Aaron", "Ruiz", "male", parser.apply("2000-06-20")),

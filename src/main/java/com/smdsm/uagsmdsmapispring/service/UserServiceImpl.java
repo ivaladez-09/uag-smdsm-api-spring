@@ -27,9 +27,6 @@ public class UserServiceImpl implements UserService{
         this.mapper = mapper;
     }
 
-    public UserServiceImpl() {
-    }
-
     @Override
     public List<UserDto> findAll() {
         List<User> users = userRepository.findAll();
@@ -64,37 +61,24 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void deleteById(Integer id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
         userRepository.deleteById(id);
     }
 
     @Override
     public Integer countUsersByGenderAndRiskFactor(String gender, String riskFactor) {
-        if (riskFactor == null || riskFactor.isEmpty()){
-            log.error("Parameter 'riskFactor' must not be null or empty.");
-            return 0;
-        }
         log.info(riskFactor + " and " + gender);
         return userRepository.countByGenderAndRiskFactor(gender, riskFactor);
     }
 
     @Override
     public Integer countUsersByGenderAndDisease(String gender, String disease) {
-        if (disease == null || disease.isEmpty()){
-            log.error("Parameter 'disease' must not be null or empty.");
-            return 0;
-        }
         log.info(disease + " and " + gender);
         return userRepository.countByGenderAndDisease(gender, disease);
     }
 
     @Override
     public Integer countByGenderAndBirthdayBetween(String gender, String startDate, String endDate) {
-
-        if (startDate == null || endDate == null){
-            log.error("Parameters 'startDate' and 'endDate' must not be null or empty.");
-            return 0;
-        }
         log.info(startDate + ", " + endDate + ", and " + gender);
         return userRepository.countByGenderAndBirthdayBetween(gender, LocalDate.parse(startDate), LocalDate.parse(endDate));
     }
