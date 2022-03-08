@@ -17,69 +17,69 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService{
 
-    private UserRepository userRepository;
-    private ModelMapper mapper;
+    private final UserRepository repository;
+    private final ModelMapper mapper;
 
     //NOTE: Inject dependencies on this way to create Unit Testing. Avoid @Autowired UserRepository userRepository;
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, ModelMapper mapper) {
-        this.userRepository = userRepository;
+    public UserServiceImpl(final UserRepository repository, final ModelMapper mapper) {
+        this.repository = repository;
         this.mapper = mapper;
     }
 
     @Override
     public List<UserDto> findAll() {
-        List<UserEntity> userEntities = userRepository.findAll();
+        List<UserEntity> userEntities = repository.findAll();
         return userEntities.stream().map(user -> mapper.map(user, UserDto.class)).collect(Collectors.toList());
     }
 
     @Override
-    public UserDto findById(Integer id) {
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
-        return mapper.map(userEntity, UserDto.class);
+    public UserDto findById(final Integer id) {
+        UserEntity user = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        return mapper.map(user, UserDto.class);
     }
 
     @Override
-    public UserDto create(UserDto userDto) {
-        UserEntity userEntity = mapper.map(userDto, UserEntity.class);
-        UserEntity newUserEntity = userRepository.save(userEntity);
-        return mapper.map(newUserEntity, UserDto.class);
+    public UserDto create(final UserDto userDto) {
+        UserEntity user = mapper.map(userDto, UserEntity.class);
+        UserEntity newUser = repository.save(user);
+        return mapper.map(newUser, UserDto.class);
     }
 
     @Override
-    public UserDto update(UserDto userDto, Integer id) {
-        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+    public UserDto update(final UserDto userDto, final Integer id) {
+        UserEntity user = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
 
-        userEntity.setFirstName(userDto.getFirstName());
-        userEntity.setLastName(userDto.getLastName());
-        userEntity.setGender(userDto.getGender());
-        userEntity.setBirthday(userDto.getBirthday());
-        userRepository.save(userEntity);
+        user.setFirstName(userDto.getFirstName());
+        user.setLastName(userDto.getLastName());
+        user.setGender(userDto.getGender());
+        user.setBirthday(userDto.getBirthday());
+        repository.save(user);
 
-        return mapper.map(userEntity, UserDto.class);
+        return mapper.map(user, UserDto.class);
     }
 
     @Override
-    public void deleteById(Integer id) {
-        userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
-        userRepository.deleteById(id);
+    public void deleteById(final Integer id) {
+        repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+        repository.deleteById(id);
     }
 
     @Override
-    public Integer countUsersByGenderAndRiskFactor(String gender, String riskFactor) {
+    public Integer countUsersByGenderAndRiskFactor(final String gender, final String riskFactor) {
         log.info(riskFactor + " and " + gender);
-        return userRepository.countByGenderAndRiskFactor(gender, riskFactor);
+        return repository.countByGenderAndRiskFactor(gender, riskFactor);
     }
 
     @Override
-    public Integer countUsersByGenderAndDisease(String gender, String disease) {
+    public Integer countUsersByGenderAndDisease(final String gender, final String disease) {
         log.info(disease + " and " + gender);
-        return userRepository.countByGenderAndDisease(gender, disease);
+        return repository.countByGenderAndDisease(gender, disease);
     }
 
     @Override
-    public Integer countByGenderAndBirthdayBetween(String gender, String startDate, String endDate) {
+    public Integer countByGenderAndBirthdayBetween(final String gender, final String startDate, final String endDate) {
         log.info(startDate + ", " + endDate + ", and " + gender);
-        return userRepository.countByGenderAndBirthdayBetween(gender, LocalDate.parse(startDate), LocalDate.parse(endDate));
+        return repository.countByGenderAndBirthdayBetween(gender, LocalDate.parse(startDate), LocalDate.parse(endDate));
     }
 }

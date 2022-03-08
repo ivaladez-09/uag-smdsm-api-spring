@@ -1,14 +1,18 @@
 package com.smdsm.uagsmdsmapispring.persistence.entity;
 
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @Entity
 @Table(name = "user")
@@ -31,12 +35,10 @@ public class UserEntity implements Serializable {
     @Column(name = "birthday", nullable = false)
     private LocalDate birthday;
 
-    @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserDiseaseEntity> diseases = new ArrayList<>();
 
-    @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRiskFactorEntity> riskFactors = new ArrayList<>();
@@ -48,5 +50,18 @@ public class UserEntity implements Serializable {
         this.lastName = lastName;
         this.gender = gender;
         this.birthday = birthday;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        UserEntity that = (UserEntity) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
