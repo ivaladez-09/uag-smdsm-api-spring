@@ -14,8 +14,10 @@ import java.util.Objects;
 @Setter
 @ToString
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "user")
+@Builder
 public class UserEntity implements Serializable {
 
     @Id
@@ -42,15 +44,6 @@ public class UserEntity implements Serializable {
     @ToString.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRiskFactorEntity> riskFactors = new ArrayList<>();
-
-    // For testing
-    public UserEntity(Integer id, String firstName, String lastName, String gender, LocalDate birthday) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.birthday = birthday;
-    }
 
     @Override
     public boolean equals(Object o) {
