@@ -4,6 +4,7 @@ import com.smdsm.uagsmdsmapispring.dto.UserDto;
 import com.smdsm.uagsmdsmapispring.exception.ResourceNotFoundException;
 import com.smdsm.uagsmdsmapispring.persistence.entity.UserEntity;
 import com.smdsm.uagsmdsmapispring.persistence.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +16,11 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
+@AllArgsConstructor //NOTE: Inject dependencies on this way. Avoid @Autowired
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;
     private final ModelMapper mapper;
-
-    //NOTE: Inject dependencies on this way. Avoid @Autowired
-    public UserServiceImpl(
-            final UserRepository repository,
-            final ModelMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
-    }
 
     @Override
     public List<UserDto> findAll() {
@@ -83,25 +77,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Integer countUsersByGenderAndRiskFactor(
-            final String gender,
-            final String riskFactor) {
+    public Integer countByGenderAndRiskFactor(final String gender, final String riskFactor) {
         log.info(riskFactor + " and " + gender);
         return repository.countByGenderAndRiskFactor(gender, riskFactor);
     }
 
     @Override
-    public Integer countUsersByGenderAndDisease(
-            final String gender,
-            final String disease) {
+    public Integer countByGenderAndDisease(final String gender, final String disease) {
         log.info(disease + " and " + gender);
         return repository.countByGenderAndDisease(gender, disease);
     }
 
     @Override
-    public Integer countByGenderAndBirthdayBetween(final String gender,
-                                                   final String startDate,
-                                                   final String endDate) {
+    public Integer countByGenderAndBirthdayBetween(
+            final String gender,
+            final String startDate,
+            final String endDate) {
         log.info(startDate + ", " + endDate + ", and " + gender);
         return repository.countByGenderAndBirthdayBetween(
                 gender,

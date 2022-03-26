@@ -2,7 +2,6 @@ package com.smdsm.uagsmdsmapispring.service;
 
 import com.smdsm.uagsmdsmapispring.dto.UserDto;
 
-import java.time.LocalDate;
 import java.util.List;
 
 public interface UserService {
@@ -12,7 +11,7 @@ public interface UserService {
     UserDto create(UserDto userDto);
     UserDto update(UserDto userDto, Integer id);
     void deleteById(Integer id);
-    Integer countUsersByGenderAndRiskFactor(String riskFactor, String gender);
-    Integer countUsersByGenderAndDisease(String disease, String gender);
+    Integer countByGenderAndRiskFactor(String riskFactor, String gender);
+    Integer countByGenderAndDisease(String disease, String gender);
     Integer countByGenderAndBirthdayBetween(String gender, String startDate, String endDate);
 }

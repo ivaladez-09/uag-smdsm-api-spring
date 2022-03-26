@@ -7,10 +7,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "disease")
 public class DiseaseEntity implements Serializable {
@@ -20,19 +19,6 @@ public class DiseaseEntity implements Serializable {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, unique = true, length = 20)
     private String name;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        DiseaseEntity that = (DiseaseEntity) o;
-        return id != null && Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }

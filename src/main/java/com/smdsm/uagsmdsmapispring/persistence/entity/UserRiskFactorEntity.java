@@ -7,9 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "user_risk_factor")
@@ -21,7 +19,7 @@ public class UserRiskFactorEntity implements Serializable {
     @Column(name = "active", nullable = false)
     private Boolean isActive = false;
 
-    @Column(name = "rate", nullable = false)
+    @Column(name = "rate")
     private Integer rate;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,17 +33,4 @@ public class UserRiskFactorEntity implements Serializable {
     @JoinColumn(name = "id_risk_factor")
     @ToString.Exclude
     private RiskFactorEntity riskFactor;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        UserRiskFactorEntity that = (UserRiskFactorEntity) o;
-        return id != null && Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

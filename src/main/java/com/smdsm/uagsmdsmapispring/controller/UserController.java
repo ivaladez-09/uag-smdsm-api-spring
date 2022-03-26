@@ -2,8 +2,8 @@ package com.smdsm.uagsmdsmapispring.controller;
 
 import com.smdsm.uagsmdsmapispring.dto.UserDto;
 import com.smdsm.uagsmdsmapispring.service.UserService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,50 +14,48 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/users")
+@AllArgsConstructor
 public class UserController {
 
-    final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    final UserService service;
 
     @GetMapping
-    ResponseEntity<List<UserDto>> getUsers(){
-        List<UserDto> users = userService.findAll();
+    ResponseEntity<List<UserDto>> getAll(){
+        List<UserDto> users = service.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    ResponseEntity<UserDto> getUserById(@PathVariable Integer id){
-        UserDto user = userService.findById(id);
+    ResponseEntity<UserDto> getById(@PathVariable Integer id){
+        UserDto user = service.findById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping
-    ResponseEntity<UserDto> createUser(@Valid @RequestBody UserDto userDto){
-        UserDto savedUserDto = userService.create(userDto);
+    ResponseEntity<UserDto> create(@Valid @RequestBody UserDto userDto){
+        UserDto savedUserDto = service.create(userDto);
         return new ResponseEntity<>(savedUserDto, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<UserDto> updateUserById(
+    ResponseEntity<UserDto> updateById(
             @Valid @RequestBody UserDto userDto,
-            @PathVariable Integer id){
-        UserDto updatedUserDto = userService.update(userDto, id);
+            @PathVariable Integer id
+    ){
+        UserDto updatedUserDto = service.update(userDto, id);
         return new ResponseEntity<>(updatedUserDto, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<String> deleteUserById(@PathVariable Integer id){
-        userService.deleteById(id);
+    ResponseEntity<String> deleteById(@PathVariable Integer id){
+        service.deleteById(id);
         return new ResponseEntity<>(
                 "User entity deleted successfully.",
                 HttpStatus.OK);
     }
 
     @GetMapping("/count-disease") // ?disease={}&gender={}
-    ResponseEntity<Integer> countUsersByDisease(
+    ResponseEntity<Integer> countByDisease(
             @RequestParam(
                     value = "disease",
                     defaultValue = "diabetes",
@@ -65,9 +63,9 @@ public class UserController {
             @RequestParam(
                     value = "gender",
                     defaultValue = "male",
-                    required = false) String gender){
-
-        Integer totalUsers = userService.countUsersByGenderAndDisease(
+                    required = false) String gender
+    ){
+        Integer totalUsers = service.countByGenderAndDisease(
                 gender,
                 disease
         );
@@ -75,7 +73,7 @@ public class UserController {
     }
 
     @GetMapping("/count-risk-factor") // ?riskFactor={}&gender={}
-    ResponseEntity<Integer> countUsersByRiskFactor(
+    ResponseEntity<Integer> countByRiskFactor(
             @RequestParam(
                     value = "riskFactor",
                     defaultValue = "hdl",
@@ -83,9 +81,9 @@ public class UserController {
             @RequestParam(
                     value = "gender",
                     defaultValue = "female",
-                    required = false) String gender){
-
-        Integer totalUsers = userService.countUsersByGenderAndRiskFactor(
+                    required = false) String gender
+    ){
+        Integer totalUsers = service.countByGenderAndRiskFactor(
                 gender,
                 riskFactor
         );
@@ -93,7 +91,7 @@ public class UserController {
     }
 
     @GetMapping("/count-date-range") // ?startDate={}&endDate={}&gender={}
-    ResponseEntity<Integer> countUsersByDateRange(
+    ResponseEntity<Integer> countByDateRange(
             @RequestParam(
                     value = "startDate",
                     defaultValue = "1900-01-01",
@@ -105,9 +103,9 @@ public class UserController {
             @RequestParam(
                     value = "gender",
                     defaultValue = "female",
-                    required = false) String gender){
-
-        Integer totalUsers = userService.countByGenderAndBirthdayBetween(
+                    required = false) String gender
+    ){
+        Integer totalUsers = service.countByGenderAndBirthdayBetween(
                 gender,
                 startDate,
                 endDate

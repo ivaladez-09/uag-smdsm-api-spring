@@ -7,10 +7,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "user_disease")
 public class UserDiseaseEntity implements Serializable {
@@ -18,8 +17,8 @@ public class UserDiseaseEntity implements Serializable {
     @EmbeddedId
     private UserDiseaseEntityKey id;
 
-    @Column(name = "active")
-    private Boolean isActive;
+    @Column(name = "active", nullable = false)
+    private Boolean isActive = false;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("userId")
@@ -32,17 +31,4 @@ public class UserDiseaseEntity implements Serializable {
     @JoinColumn(name = "id_disease")
     @ToString.Exclude
     private DiseaseEntity disease;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        UserDiseaseEntity that = (UserDiseaseEntity) o;
-        return id != null && Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

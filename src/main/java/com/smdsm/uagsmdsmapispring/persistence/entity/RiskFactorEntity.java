@@ -8,10 +8,9 @@ import java.io.Serializable;
 import java.util.Objects;
 
 
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "risk_factor")
 public class RiskFactorEntity implements Serializable {
@@ -23,17 +22,4 @@ public class RiskFactorEntity implements Serializable {
 
     @Column(name = "name", nullable = false, unique = true, length = 50)
     private String name;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        RiskFactorEntity that = (RiskFactorEntity) o;
-        return id != null && Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }
